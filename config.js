@@ -198,6 +198,11 @@ const CONFIG = {
   STORAGE_KEY_LEADERBOARD: "snakeLeaderboard",
   STORAGE_KEY_SKIN: "snakeSkin",
   MAX_LEADERBOARD_ENTRIES: 10,
+
+  // === MOBILE SETTINGS ===
+  MOBILE_SWIPE_MIN_DISTANCE: 30, // Minimum swipe distance in pixels
+  MOBILE_DPAD_SIZE: 200, // D-pad size in pixels
+  MOBILE_CANVAS_SCALE: 1, // Scale factor for mobile canvas (1 = no scaling)
 };
 
 // Freeze configuration to prevent accidental modifications

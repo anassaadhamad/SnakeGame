@@ -2,7 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="theme-color" content="#0a0a0a" />
     <title>Advanced Snake Game</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -251,7 +260,47 @@
         <!-- Controls -->
         <div class="controls">
           <button class="btn-control" id="pauseBtn">Pause (Space)</button>
-          <div class="control-hint">Use Arrow Keys or WASD to move</div>
+          <div class="control-hint" id="controlHint">
+            Use Arrow Keys or WASD to move
+          </div>
+        </div>
+
+        <!-- Mobile Touch Controls -->
+        <div class="mobile-controls" id="mobileControls" style="display: none">
+          <div class="dpad-container">
+            <button class="dpad-btn dpad-up" id="dpadUp" aria-label="Move Up">
+              <span>▲</span>
+            </button>
+            <button
+              class="dpad-btn dpad-left"
+              id="dpadLeft"
+              aria-label="Move Left"
+            >
+              <span>◄</span>
+            </button>
+            <button
+              class="dpad-btn dpad-center"
+              id="dpadCenter"
+              aria-label="Pause"
+            >
+              <span>⏸</span>
+            </button>
+            <button
+              class="dpad-btn dpad-right"
+              id="dpadRight"
+              aria-label="Move Right"
+            >
+              <span>►</span>
+            </button>
+            <button
+              class="dpad-btn dpad-down"
+              id="dpadDown"
+              aria-label="Move Down"
+            >
+              <span>▼</span>
+            </button>
+          </div>
+          <div class="mobile-hint">Swipe or tap D-pad to control</div>
         </div>
       </div>
 

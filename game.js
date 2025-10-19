@@ -76,12 +76,20 @@ class SnakeGame {
     this.sounds = {};
     this.musicTracks = {};
 
+    // Mobile support
+    this.isMobile = this.detectMobile();
+    this.touchStartX = 0;
+    this.touchStartY = 0;
+    this.touchEndX = 0;
+    this.touchEndY = 0;
+
     this.initializeEventListeners();
     this.loadHighScore();
     this.loadSkin();
     this.updateHighScoreDisplay();
     this.updateChallengeAvailability();
     this.initializeAudio();
+    this.initializeMobileControls();
   }
 
   // === INITIALIZATION ===
@@ -266,6 +274,204 @@ class SnakeGame {
     }
   }
 
+  // === MOBILE DEVICE DETECTION ===
+  detectMobile() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+    // Check for mobile devices
+    const isMobileDevice =
+      /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
+        userAgent.toLowerCase()
+      );
+
+    // Check for touch capability
+    const hasTouchScreen =
+      "ontouchstart" in window ||
+      navigator.maxTouchPoints > 0 ||
+      navigator.msMaxTouchPoints > 0;
+
+    // Check for small screen
+    const isSmallScreen = window.innerWidth <= 768;
+
+    return isMobileDevice || (hasTouchScreen && isSmallScreen);
+  }
+
+  // === MOBILE CONTROLS INITIALIZATION ===
+  initializeMobileControls() {
+    // Always initialize touch controls, let CSS handle visibility
+    const mobileControls = document.getElementById("mobileControls");
+    const controlHint = document.getElementById("controlHint");
+
+    // Update control hint for mobile
+    if (this.isMobile && controlHint) {
+      controlHint.textContent = "Swipe or use D-pad to move";
+    }
+
+    console.log("Initializing mobile controls. isMobile:", this.isMobile);
+
+    // Add touch swipe listeners to canvas
+    this.canvas.addEventListener(
+      "touchstart",
+      (e) => this.handleTouchStart(e),
+      {
+        passive: false,
+      }
+    );
+    this.canvas.addEventListener("touchmove", (e) => this.handleTouchMove(e), {
+      passive: false,
+    });
+    this.canvas.addEventListener("touchend", (e) => this.handleTouchEnd(e), {
+      passive: false,
+    });
+
+    // Add D-pad button listeners with both touch and click
+    const addDpadListener = (id, direction, isCenter = false) => {
+      const btn = document.getElementById(id);
+      if (!btn) {
+        console.error(`Button ${id} not found`);
+        return;
+      }
+
+      const handler = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        console.log(`D-pad ${id} pressed`);
+
+        if (isCenter) {
+          this.togglePause();
+        } else {
+          this.handleDirectionInput(direction);
+        }
+      };
+
+      // Add both touchstart and click for maximum compatibility
+      btn.addEventListener("touchstart", handler, { passive: false });
+      btn.addEventListener("click", handler);
+
+      // Add visual feedback
+      btn.addEventListener(
+        "touchstart",
+        () => {
+          btn.style.transform = "scale(0.95)";
+        },
+        { passive: true }
+      );
+
+      btn.addEventListener(
+        "touchend",
+        () => {
+          btn.style.transform = "scale(1)";
+        },
+        { passive: true }
+      );
+    };
+
+    // Attach listeners to all D-pad buttons
+    addDpadListener("dpadUp", { x: 0, y: -1 });
+    addDpadListener("dpadDown", { x: 0, y: 1 });
+    addDpadListener("dpadLeft", { x: -1, y: 0 });
+    addDpadListener("dpadRight", { x: 1, y: 0 });
+    addDpadListener("dpadCenter", null, true);
+
+    console.log("Mobile controls initialized successfully");
+  }
+
+  // === TOUCH SWIPE HANDLERS ===
+  handleTouchStart(e) {
+    if (this.gameState !== "playing") return;
+
+    e.preventDefault();
+    const touch = e.touches[0];
+    this.touchStartX = touch.clientX;
+    this.touchStartY = touch.clientY;
+  }
+
+  handleTouchMove(e) {
+    if (this.gameState !== "playing") return;
+    e.preventDefault();
+  }
+
+  handleTouchEnd(e) {
+    if (this.gameState !== "playing") return;
+
+    e.preventDefault();
+    const touch = e.changedTouches[0];
+    this.touchEndX = touch.clientX;
+    this.touchEndY = touch.clientY;
+
+    this.handleSwipeGesture();
+  }
+
+  handleSwipeGesture() {
+    const deltaX = this.touchEndX - this.touchStartX;
+    const deltaY = this.touchEndY - this.touchStartY;
+    const minSwipeDistance = 30; // Minimum distance for a swipe
+
+    // Check if swipe distance is significant
+    if (
+      Math.abs(deltaX) < minSwipeDistance &&
+      Math.abs(deltaY) < minSwipeDistance
+    ) {
+      return;
+    }
+
+    let newDirection = null;
+
+    // Determine swipe direction
+    if (Math.abs(deltaX) > Math.abs(deltaY)) {
+      // Horizontal swipe
+      if (deltaX > 0) {
+        newDirection = { x: 1, y: 0 }; // Right
+      } else {
+        newDirection = { x: -1, y: 0 }; // Left
+      }
+    } else {
+      // Vertical swipe
+      if (deltaY > 0) {
+        newDirection = { x: 0, y: 1 }; // Down
+      } else {
+        newDirection = { x: 0, y: -1 }; // Up
+      }
+    }
+
+    if (newDirection) {
+      this.handleDirectionInput(newDirection);
+    }
+  }
+
+  handleDirectionInput(newDirection) {
+    console.log(
+      "Direction input received:",
+      newDirection,
+      "Game state:",
+      this.gameState
+    );
+
+    if (this.gameState !== "playing") {
+      console.log("Game not playing, ignoring input");
+      return;
+    }
+
+    // Prevent 180-degree turns
+    const lastDir = this.lastDirectionProcessed;
+    if (
+      (newDirection.x === -lastDir.x && newDirection.y === lastDir.y) ||
+      (newDirection.y === -lastDir.y && newDirection.x === lastDir.x)
+    ) {
+      console.log("180-degree turn prevented");
+      return;
+    }
+
+    // Add to input queue
+    if (this.inputQueue.length < 3) {
+      this.inputQueue.push(newDirection);
+      console.log(
+        "Direction added to queue. Queue length:",
+        this.inputQueue.length
+      );
+    }
+  }
+
   // === GAME STATE MANAGEMENT ===
   startGame() {
     // Validate challenge-mode compatibility
@@ -341,6 +547,11 @@ class SnakeGame {
     document.getElementById("mainMenu").style.display = "none";
     document.getElementById("gameOverScreen").style.display = "none";
     document.getElementById("gameScreen").style.display = "block";
+
+    // Show mobile controls if on mobile device
+    if (this.isMobile) {
+      document.getElementById("mobileControls").style.display = "block";
+    }
 
     // Update UI labels based on mode
     this.updateUILabels();

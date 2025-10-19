@@ -973,6 +973,374 @@ input:checked + .toggle-slider:before {
   }
 }
 
+/* === MOBILE CONTROLS === */
+.mobile-controls {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none;
+  z-index: 1000;
+  padding: 0;
+  margin: 0;
+}
+
+.dpad-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 5px;
+}
+
+.dpad-btn {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid rgba(0, 255, 0, 0.5);
+  border-radius: 12px;
+  color: #00ff00;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  position: relative;
+  z-index: 1001;
+  pointer-events: auto;
+}
+
+.dpad-btn:active {
+  background: rgba(0, 255, 0, 0.3);
+  border-color: #00ff00;
+  transform: scale(0.95);
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.5);
+}
+
+.dpad-btn span {
+  pointer-events: none;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.dpad-up {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.dpad-left {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.dpad-center {
+  grid-column: 2;
+  grid-row: 2;
+  background: rgba(0, 0, 0, 0.7);
+  border-color: rgba(255, 215, 0, 0.5);
+  color: #ffd700;
+}
+
+.dpad-center:active {
+  background: rgba(255, 215, 0, 0.4);
+  border-color: #ffd700;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.dpad-right {
+  grid-column: 3;
+  grid-row: 2;
+}
+
+.dpad-down {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.mobile-hint {
+  display: none; /* Hidden since controls are now floating */
+}
+
+/* Mobile canvas adjustments */
+@media (max-width: 768px) {
+  body {
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .container {
+    padding: 10px;
+    max-width: 100%;
+  }
+
+  .header {
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.8em;
+  }
+
+  /* Fullscreen game on mobile */
+  .game-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0a0a0a;
+    z-index: 100;
+    overflow: hidden;
+  }
+
+  .canvas-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+  }
+
+  #gameCanvas {
+    max-width: 100vw;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+  }
+
+  .game-info {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    padding: 8px 10px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 110;
+    margin: 0;
+  }
+
+  .info-row {
+    gap: 8px;
+    justify-content: space-around;
+  }
+
+  .info-item {
+    font-size: 0.85em;
+  }
+
+  .info-label {
+    font-size: 0.75em;
+  }
+
+  .info-value {
+    font-size: 1em;
+  }
+
+  .controls {
+    display: none; /* Hide desktop controls on mobile */
+  }
+
+  .control-hint {
+    font-size: 0.85em;
+  }
+
+  .menu-content {
+    max-width: 100%;
+    padding: 20px;
+  }
+
+  .mode-selector,
+  .skin-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .challenge-selector {
+    grid-template-columns: 1fr;
+  }
+
+  .dpad-container {
+    width: 170px;
+    height: 170px;
+  }
+
+  .dpad-btn span {
+    font-size: 22px;
+  }
+
+  /* Position D-pad in bottom right */
+  .mobile-controls {
+    bottom: 30px;
+    right: 15px;
+  }
+
+  /* Show mobile controls on touch devices when game is playing */
+  .game-screen .mobile-controls {
+    display: block !important;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.5em;
+  }
+
+  .header-stats {
+    font-size: 0.85em;
+  }
+
+  #gameCanvas {
+    max-height: 65vh;
+  }
+
+  .dpad-container {
+    width: 150px;
+    height: 150px;
+  }
+
+  .dpad-btn {
+    font-size: 18px;
+  }
+
+  .dpad-btn span {
+    font-size: 18px;
+  }
+
+  .mobile-controls {
+    bottom: 20px;
+    right: 10px;
+  }
+
+  .info-item {
+    font-size: 0.75em;
+  }
+
+  .btn-primary,
+  .btn-secondary {
+    font-size: 0.9em;
+    padding: 12px 24px;
+  }
+}
+
+/* Landscape mobile orientation */
+@media (max-width: 896px) and (orientation: landscape) {
+  .header {
+    display: none;
+  }
+
+  .game-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  #gameCanvas {
+    max-height: 85vh;
+    max-width: 90vw;
+  }
+
+  .game-info {
+    position: fixed;
+    top: 5px;
+    left: 5px;
+    right: auto;
+    padding: 5px 10px;
+    background: rgba(0, 0, 0, 0.85);
+  }
+
+  .info-row {
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .info-item {
+    font-size: 0.75em;
+  }
+
+  .mobile-controls {
+    bottom: 15px;
+    right: 15px;
+  }
+
+  .dpad-container {
+    width: 130px;
+    height: 130px;
+  }
+
+  .dpad-btn span {
+    font-size: 16px;
+  }
+}
+
+/* Touch device specific */
+@media (hover: none) and (pointer: coarse) {
+  /* Increase tap target sizes for better usability */
+  .btn-primary,
+  .btn-secondary,
+  .btn-control {
+    min-height: 48px;
+    font-size: 16px;
+  }
+
+  .mode-btn,
+  .diff-btn,
+  .challenge-btn,
+  .skin-btn {
+    min-height: 60px;
+  }
+
+  /* Remove hover effects on touch devices */
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .mode-btn:hover,
+  .diff-btn:hover {
+    transform: none;
+  }
+
+  /* Use active states instead */
+  .btn-primary:active,
+  .btn-secondary:active {
+    transform: translateY(2px);
+  }
+}
+
+/* Prevent text selection on touch devices */
+@media (hover: none) {
+  * {
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  input,
+  textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+}
+
 /* === ANIMATIONS === */
 @keyframes slideIn {
   from {
