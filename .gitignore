@@ -1,0 +1,6 @@
+# Exclude all .md files except README.md
+*.md
+!README.md
+
+# Exclude documentation and reference files
+*.txt

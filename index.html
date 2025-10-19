@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Advanced Snake Game</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Header -->
+      <header class="header">
+        <h1 class="title">🐍 ADVANCED SNAKE</h1>
+        <div class="header-stats">
+          <div class="stat-item">
+            <span class="stat-label">High Score</span>
+            <span class="stat-value" id="highScore">0</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Menu -->
+      <div id="mainMenu" class="menu">
+        <div class="menu-content">
+          <h2 class="menu-title">Main Menu</h2>
+
+          <div class="menu-section">
+            <h3>Game Mode</h3>
+            <div class="mode-selector">
+              <button class="mode-btn active" data-mode="CLASSIC">
+                <div class="mode-name">Classic</div>
+                <div class="mode-desc">Traditional snake with levels</div>
+              </button>
+              <button class="mode-btn" data-mode="ARCADE">
+                <div class="mode-name">Arcade</div>
+                <div class="mode-desc">Fast-paced with portals</div>
+              </button>
+              <button class="mode-btn" data-mode="SURVIVAL">
+                <div class="mode-name">Survival</div>
+                <div class="mode-desc">How long can you last?</div>
+              </button>
+              <button class="mode-btn" data-mode="ZEN">
+                <div class="mode-name">Zen</div>
+                <div class="mode-desc">Relaxed mode</div>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-section">
+            <h3>Difficulty</h3>
+            <div class="difficulty-selector">
+              <button class="diff-btn" data-difficulty="EASY">Easy</button>
+              <button class="diff-btn active" data-difficulty="MEDIUM">
+                Medium
+              </button>
+              <button class="diff-btn" data-difficulty="HARD">Hard</button>
+              <button class="diff-btn" data-difficulty="INSANE">Insane</button>
+            </div>
+          </div>
+
+          <div class="menu-section">
+            <h3>Snake Skin</h3>
+            <div class="skin-selector">
+              <button class="skin-btn active" data-skin="CLASSIC">
+                <div
+                  class="skin-preview"
+                  style="background: linear-gradient(135deg, #00cc00, #00ff00)"
+                ></div>
+                <div class="skin-info">
+                  <div class="skin-name">Classic Green</div>
+                  <div class="skin-desc">Original style</div>
+                </div>
+              </button>
+              <button class="skin-btn" data-skin="BLUE_ICE">
+                <div
+                  class="skin-preview"
+                  style="background: linear-gradient(135deg, #0066cc, #0099ff)"
+                ></div>
+                <div class="skin-info">
+                  <div class="skin-name">Blue Ice</div>
+                  <div class="skin-desc">Cool theme</div>
+                </div>
+              </button>
+              <button class="skin-btn" data-skin="RED_FIRE">
+                <div
+                  class="skin-preview"
+                  style="background: linear-gradient(135deg, #cc0000, #ff3333)"
+                ></div>
+                <div class="skin-info">
+                  <div class="skin-name">Red Fire</div>
+                  <div class="skin-desc">Burning hot</div>
+                </div>
+              </button>
+              <button class="skin-btn" data-skin="PURPLE_GALAXY">
+                <div
+                  class="skin-preview"
+                  style="background: linear-gradient(135deg, #6600cc, #9933ff)"
+                ></div>
+                <div class="skin-info">
+                  <div class="skin-name">Purple Galaxy</div>
+                  <div class="skin-desc">Cosmic vibe</div>
+                </div>
+              </button>
+              <button class="skin-btn" data-skin="GOLDEN">
+                <div
+                  class="skin-preview"
+                  style="background: linear-gradient(135deg, #cc9900, #ffd700)"
+                ></div>
+                <div class="skin-info">
+                  <div class="skin-name">Golden</div>
+                  <div class="skin-desc">Shiny gold</div>
+                </div>
+              </button>
+              <button class="skin-btn" data-skin="PINK_CANDY">
+                <div
+                  class="skin-preview"
+                  style="background: linear-gradient(135deg, #ff1493, #ff69b4)"
+                ></div>
+                <div class="skin-info">
+                  <div class="skin-name">Pink Candy</div>
+                  <div class="skin-desc">Sweet & cute</div>
+                </div>
+              </button>
+              <button class="skin-btn" data-skin="DARK_SHADOW">
+                <div
+                  class="skin-preview"
+                  style="background: linear-gradient(135deg, #1a1a1a, #333333)"
+                ></div>
+                <div class="skin-info">
+                  <div class="skin-name">Dark Shadow</div>
+                  <div class="skin-desc">Mysterious</div>
+                </div>
+              </button>
+              <button class="skin-btn" data-skin="RAINBOW">
+                <div
+                  class="skin-preview"
+                  style="
+                    background: linear-gradient(
+                      135deg,
+                      #ff0066,
+                      #00ff99,
+                      #ffff00
+                    );
+                  "
+                ></div>
+                <div class="skin-info">
+                  <div class="skin-name">Rainbow</div>
+                  <div class="skin-desc">Colorful</div>
+                </div>
+              </button>
+            </div>
+          </div>
+
+          <div class="menu-section">
+            <h3>Challenge Mode</h3>
+            <div class="challenge-selector">
+              <button class="challenge-btn" data-challenge="none">
+                <div class="challenge-name">No Challenge</div>
+                <div class="challenge-desc">Play normally</div>
+              </button>
+              <button class="challenge-btn" data-challenge="SPEED_DEMON">
+                <div class="challenge-name">Speed Demon</div>
+                <div class="challenge-desc">500 points in 2 minutes</div>
+              </button>
+              <button class="challenge-btn" data-challenge="MARATHON">
+                <div class="challenge-name">Marathon</div>
+                <div class="challenge-desc">Grow to 50 segments</div>
+              </button>
+              <button class="challenge-btn" data-challenge="PERFECTIONIST">
+                <div class="challenge-name">Perfectionist</div>
+                <div class="challenge-desc">3 levels without hits</div>
+              </button>
+            </div>
+          </div>
+
+          <button class="btn-primary btn-large" id="startGame">
+            Start Game
+          </button>
+          <button class="btn-secondary" id="viewLeaderboard">
+            Leaderboard
+          </button>
+          <button class="btn-secondary" id="howToPlay">How to Play</button>
+          <button class="btn-secondary" id="openSettings">⚙️ Settings</button>
+        </div>
+      </div>
+
+      <!-- Game Screen -->
+      <div id="gameScreen" class="game-screen" style="display: none">
+        <!-- Game Info Panel -->
+        <div class="game-info">
+          <div class="info-row">
+            <div class="info-item">
+              <span class="info-label">Score</span>
+              <span class="info-value" id="score">0</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label" id="levelLabel">Level</span>
+              <span class="info-value" id="level">1</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Length</span>
+              <span class="info-value" id="length">3</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label" id="foodLabel">Food</span>
+              <span class="info-value" id="foodCount">0/15</span>
+            </div>
+          </div>
+
+          <!-- Active Effects -->
+          <div class="effects-container" id="effectsContainer"></div>
+
+          <!-- Challenge Progress -->
+          <div
+            class="challenge-progress"
+            id="challengeProgress"
+            style="display: none"
+          >
+            <div class="progress-label" id="challengeLabel"></div>
+            <div class="progress-bar">
+              <div class="progress-fill" id="challengeBar"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Canvas Container -->
+        <div class="canvas-container">
+          <canvas id="gameCanvas" tabindex="0"></canvas>
+
+          <!-- Pause Overlay -->
+          <div id="pauseOverlay" class="overlay" style="display: none">
+            <h2>PAUSED</h2>
+            <p>Press SPACE to resume</p>
+            <button class="btn-secondary" id="resumeGame">Resume</button>
+            <button class="btn-secondary" id="quitGame">Quit to Menu</button>
+          </div>
+
+          <!-- Level Complete Overlay -->
+          <div
+            id="levelCompleteOverlay"
+            class="overlay success-overlay"
+            style="display: none"
+          >
+            <h2>LEVEL COMPLETE!</h2>
+            <p class="level-bonus">+200 Bonus Points</p>
+            <button class="btn-primary" id="nextLevel">Next Level</button>
+          </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="controls">
+          <button class="btn-control" id="pauseBtn">Pause (Space)</button>
+          <div class="control-hint">Use Arrow Keys or WASD to move</div>
+        </div>
+      </div>
+
+      <!-- Leaderboard Screen -->
+      <div id="leaderboardScreen" class="menu" style="display: none">
+        <div class="menu-content">
+          <h2 class="menu-title">🏆 Leaderboard</h2>
+          <div class="leaderboard-list" id="leaderboardList"></div>
+          <button class="btn-secondary" id="closeLeaderboard">
+            Back to Menu
+          </button>
+        </div>
+      </div>
+
+      <!-- How to Play Screen -->
+      <div id="howToPlayScreen" class="menu" style="display: none">
+        <div class="menu-content">
+          <h2 class="menu-title">📖 How to Play</h2>
+          <div class="instructions">
+            <div class="instruction-section">
+              <h3>Basic Controls</h3>
+              <ul>
+                <li>
+                  <strong>Arrow Keys</strong> or <strong>WASD</strong> - Move
+                  the snake
+                </li>
+                <li><strong>Space</strong> - Pause/Resume game</li>
+                <li><strong>ESC</strong> - Pause game</li>
+              </ul>
+            </div>
+
+            <div class="instruction-section">
+              <h3>Game Elements</h3>
+              <ul>
+                <li>
+                  🟢 <strong>Snake</strong> - Your character, grows when eating
+                  food
+                </li>
+                <li>🔴 <strong>Red Food</strong> - Normal food (+10 points)</li>
+                <li>
+                  🟡 <strong>Golden Food</strong> - Special food (+50 points,
+                  appears briefly)
+                </li>
+                <li>
+                  ⬛ <strong>Obstacles</strong> - Avoid these or game over!
+                </li>
+                <li>
+                  🟣 <strong>Portals</strong> - Teleport between connected
+                  portals
+                </li>
+              </ul>
+            </div>
+
+            <div class="instruction-section">
+              <h3>Power-Ups</h3>
+              <ul>
+                <li>
+                  ⚡ <strong>Speed Boost</strong> - Move faster temporarily
+                </li>
+                <li>🐌 <strong>Slow Motion</strong> - Slows down time</li>
+                <li>
+                  🛡️ <strong>Invincibility</strong> - Can't die for a short time
+                </li>
+                <li>
+                  ✨ <strong>Score Multiplier</strong> - Double points for 10
+                  seconds
+                </li>
+                <li>
+                  📏 <strong>Shrink</strong> - Reduces snake length by 3
+                  segments
+                </li>
+              </ul>
+            </div>
+
+            <div class="instruction-section">
+              <h3>Game Modes</h3>
+              <ul>
+                <li>
+                  <strong>Classic</strong> - Traditional snake with progressive
+                  levels
+                </li>
+                <li>
+                  <strong>Arcade</strong> - Fast-paced with all features enabled
+                </li>
+                <li>
+                  <strong>Survival</strong> - Endless mode with increasing
+                  difficulty
+                </li>
+                <li>
+                  <strong>Zen</strong> - Relaxed mode where walls wrap around
+                </li>
+              </ul>
+            </div>
+
+            <div class="instruction-section">
+              <h3>Challenges</h3>
+              <ul>
+                <li>
+                  <strong>Speed Demon</strong> - Reach 500 points within 2
+                  minutes
+                </li>
+                <li>
+                  <strong>Marathon</strong> - Grow your snake to 50 segments
+                </li>
+                <li>
+                  <strong>Perfectionist</strong> - Complete 3 levels without
+                  hitting walls
+                </li>
+              </ul>
+            </div>
+
+            <div class="instruction-section">
+              <h3>Tips</h3>
+              <ul>
+                <li>Plan your moves ahead to avoid trapping yourself</li>
+                <li>
+                  Golden food disappears after 5 seconds - grab it quickly!
+                </li>
+                <li>Use power-ups strategically in tight situations</li>
+                <li>Each level increases speed and adds more obstacles</li>
+                <li>Complete levels to earn bonus points</li>
+              </ul>
+            </div>
+          </div>
+          <button class="btn-primary" id="closeHowToPlay">Got It!</button>
+        </div>
+      </div>
+
+      <!-- Settings Screen -->
+      <div id="settingsScreen" class="menu" style="display: none">
+        <div class="menu-content">
+          <h2 class="menu-title">⚙️ Settings</h2>
+
+          <div class="settings-section">
+            <h3>Audio Settings</h3>
+
+            <div class="setting-item">
+              <div class="setting-header">
+                <span class="setting-label">Background Music</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="musicToggle" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="setting-control">
+                <span class="volume-icon">🔊</span>
+                <input
+                  type="range"
+                  id="musicVolume"
+                  min="0"
+                  max="100"
+                  value="30"
+                  class="volume-slider"
+                />
+                <span class="volume-value" id="musicVolumeValue">30%</span>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <div class="setting-header">
+                <span class="setting-label">Sound Effects</span>
+                <label class="toggle-switch">
+                  <input type="checkbox" id="soundToggle" checked />
+                  <span class="toggle-slider"></span>
+                </label>
+              </div>
+              <div class="setting-control">
+                <span class="volume-icon">🔊</span>
+                <input
+                  type="range"
+                  id="soundVolume"
+                  min="0"
+                  max="100"
+                  value="50"
+                  class="volume-slider"
+                />
+                <span class="volume-value" id="soundVolumeValue">50%</span>
+              </div>
+            </div>
+
+            <div class="setting-item">
+              <button class="btn-test-sound" id="testSound">
+                🎵 Test Sound
+              </button>
+            </div>
+          </div>
+
+          <button class="btn-primary" id="closeSettings">Save & Close</button>
+        </div>
+      </div>
+
+      <!-- Game Over Screen -->
+      <div id="gameOverScreen" class="menu" style="display: none">
+        <div class="menu-content">
+          <h2 class="menu-title game-over-title">GAME OVER</h2>
+          <div class="game-over-stats">
+            <div class="stat-row">
+              <span class="stat-name">Final Score:</span>
+              <span class="stat-number" id="finalScore">0</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Level Reached:</span>
+              <span class="stat-number" id="finalLevel">1</span>
+            </div>
+            <div class="stat-row">
+              <span class="stat-name">Snake Length:</span>
+              <span class="stat-number" id="finalLength">3</span>
+            </div>
+            <div
+              id="challengeResult"
+              class="challenge-result"
+              style="display: none"
+            ></div>
+          </div>
+          <div class="game-over-message" id="gameOverMessage"></div>
+          <button class="btn-primary btn-large" id="playAgain">
+            Play Again
+          </button>
+          <button class="btn-secondary" id="backToMenu">Main Menu</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="config.js"></script>
+    <script src="game.js"></script>
+  </body>
+</html>
