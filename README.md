@@ -4,6 +4,22 @@ A feature-rich, modern web-based Snake game with multiple game modes, challenges
 
 ![Snake Game](https://img.shields.io/badge/version-2.0-brightgreen) ![License](https://img.shields.io/badge/license-MIT-blue) ![JavaScript](https://img.shields.io/badge/JavaScript-ES6-yellow)
 
+---
+
+<div align="center">
+
+## 🎮 **[► PLAY NOW! ◄](https://anassaadhamad.github.io/SnakeGame/)** 🎮
+
+### **[👉 Click Here to Play Instantly - No Download Required! 👈](https://anassaadhamad.github.io/SnakeGame/)**
+
+🎵 **Full Audio** • 🎨 **8 Snake Skins** • 🏆 **4 Game Modes** • ⚡ **5 Power-Ups**
+
+**Play directly in your browser with all features unlocked!**
+
+</div>
+
+---
+
 ## ✨ Key Features
 
 - 🎮 **4 Unique Game Modes** - Classic, Arcade, Survival, and Zen
@@ -526,10 +542,13 @@ Created by **Anas Saad Hamad**
 
 ## 🎮 Play Online
 
-Visit the GitHub Pages site to play without downloading:
-[https://anassaadhamad.github.io/SnakeGame](https://anassaadhamad.github.io/SnakeGame)
+**[🎮 Play Now!](https://anassaadhamad.github.io/SnakeGame/)** - No download required!
 
-*(After enabling GitHub Pages in repository settings)*
+Experience the full game directly in your browser with all features:
+- ✨ All 4 game modes
+- 🎵 Full audio system
+- 🎨 8 customizable snake skins
+- 🏆 Local leaderboard tracking
 
 ## ⭐ Show Your Support
 
